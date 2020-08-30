@@ -78,9 +78,12 @@
             </div>
 
         </div>
-        <input type="file" value="a" id="drop-zone" style="display: inline-block; width:400px; height:300px; background:#ccf;">
-        <input type="file" value="a" id="" style="display: inline-block; width:400px; height:300px; background:#ccf;">
-        <a href="" id="fileurl">AAA</a>
+        <!-- ボタン表示したくないときはlabelで囲い　for 関連付け-->
+        <input type="file" value="a" id="drop-zone" style="display: block; width:400px; height:300px; background:#ccf;">
+        <br>
+        <label for="drop-zone2" id="drop_zone2l" style="display: inline-block; width:400px; height:300px; background:#ccf;">
+        <input type="file" value="a" id="drop-zone2" style="display: none;">
+    </label>
     </main>
 
     <footer>

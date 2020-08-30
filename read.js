@@ -1,28 +1,38 @@
-var element = document.getElementById("drop-zone");
-/*element.addEventListener("dragover", function (e) {
+//Label　Inputの場合（ボタンなし）
+var element2 = document.getElementById("drop_zone2l");
+element2.addEventListener("dragover", function (e) {
     e.preventDefault();
     //通常のファイルが開く動作の停止
 });
-/*
-element.addEventListener("drop", function (e) {
-	/*var file = e.dataTransfer.files;
+
+element2.addEventListener("drop", function (e) {
+	var file = e.dataTransfer.files;
 	var data_transfer = e.dataTransfer;
     var type_list = data_transfer.types;
 	if(!type_list) return;
 
     e.preventDefault();
 
-    var filereader = new FileReader();
+   var filereader = new FileReader();
     filereader.onload = function (e) {
-        console.log(filereader.result);
-    }
-    document.getElementById("drop-zone").files = file;
-});*/
+		console.log(filereader.result);
+		var tb=filereader.result;
 
+		//ファイル処理
+		makeCSV(tb)
+	}
+	filereader.readAsText(file[0])
+	
+    document.getElementById("drop-zone2").files = file;
+});
+
+
+
+//直Inputの場合
+var element = document.getElementById("drop-zone");
 var inputfile = document.getElementById('drop-zone')
 
 var a = inputfile.addEventListener("change", function (e) {
-
     console.log("s")
     var file = element.files;
     var reader = new FileReader()
@@ -45,6 +55,8 @@ var a = inputfile.addEventListener("change", function (e) {
 
 }, false);
 
+
+//CSV処理系
 //CSVを出力する関数
 function makeCSV(csvdata) {
 
@@ -53,46 +65,3 @@ function makeCSV(csvdata) {
     console.log(tmp);
 
 }
-/*
- function loads(){
-	var element=document.getElementById("drop-zone");
-	console.log("s")
-	var file =element.files;
-	var reader = new FileReader()
-	reader.readAsDataURL(file)
-	reader.onload = function() {
-		//image.src = reader.result;
-		console.log(reader.result)
-	}
- }
-
-function getCSV(url) {
-    return new Promise((resolve, reject) => {
-        var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成、サーバと非同期通信するためのAPI
-        req.open("get", url, true); // アクセスするファイルを指定
-        req.onload = () => {
-            if (req.readyState === 4 && req.status === 0) {
-                resolve(convertCSVtoArray(req.responseText));
-            } else {
-                reject(new Error(req.statusText));
-            }
-        };
-        req.onerror = () => {
-            reject(new Error(req.statusText));
-        };
-        req.send(null); // HTTPリクエストの発行
-    });
-}
-
-// 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
-function convertCSVtoArray(str) { // 読み込んだCSVデータが文字列として渡される
-    var result = []; // 最終的な二次元配列を入れるための配列
-    var tmp = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
-
-    // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
-    for (var i = 0; i < tmp.length; ++i) {
-        result[i] = tmp[i].split(',');
-    }
-    alert(result[0][1])
-    return result;
-}*/
