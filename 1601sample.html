@@ -9,10 +9,10 @@
     <script src="read.js"  type="text/javascript" defer></script>
 </head>
 
-<body>
+<body onload="id_set()"> 
     <header>
         <h1>1601教室席順レイアウト</h1>
-        <style>
+       <style>
             .room {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -35,7 +35,7 @@
     <main>
         <h2>授業名：　　　　<br>担当教員名：　　　　</h2>
 
-        <div class="room">
+        <div class="room" id="room">
             <div class="item">
                 <div class="desk_no">A-01</div>
                 <div class="name"></div>
@@ -76,14 +76,56 @@
                 <div class="desk_no">J-01</div>
                 <div class="name"></div>
             </div>
-
+            <div class="item">
+                <div class="desk_no">A-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">B-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">C-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">D-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">E-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">F-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">G-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">H-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">I-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">J-02</div>
+                <div class="name"></div>
+            </div>
+            <div class="item">
+                <div class="desk_no">J-02</div>
+                <div class="name"></div>
+            </div>
         </div>
         <!-- ボタン表示したくないときはlabelで囲い　for 関連付け-->
         <input type="file" value="a" id="drop-zone" style="display: block; width:400px; height:300px; background:#ccf;">
         <br>
-        <label for="drop-zone2" id="drop_zone2l" style="display: inline-block; width:400px; height:300px; background:#ccf;">
-        <input type="file" value="a" id="drop-zone2" style="display: none;">
-    </label>
+        <div for="drop-zone2" id="drop_zone2l" style="display: inline-block; width:400px; height:300px; background:#ccf;"></div>
+        
     </main>
 
     <footer>
