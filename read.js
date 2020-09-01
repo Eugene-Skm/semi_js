@@ -30,6 +30,7 @@ element2.addEventListener("drop", function (e) {
             makeCSV(filereader.result)　　//filereader.result　＝　データ内容
         }
         filereader.readAsText(file[0])
+        //        reader.readAsText(fileData, 'Shift_JIS');
    }
     
 });
@@ -101,6 +102,9 @@ function makeCSV(csvdata) {
 }
 
 function name_set(memberdata){
+    var classnm = prompt("授業名を入力してください");
+    var teachernm = prompt("教員名を入力してください");
+    document.getElementById("classdata").innerHTML="授業名："+classnm+"<br>担当教員名："+teachernm;
     var member_count=1;
     var step=2; //座席間隔　デフォルト値2　＝1席おき
     for(i=0;i<room_id_list.length;i+=step){
