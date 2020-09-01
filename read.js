@@ -13,6 +13,13 @@ element2.addEventListener("dragleave", function (e) {
     element2.style.border="none";
 });
 
+String.prototype.toUnicode = function(){
+    var result = [];
+    for(var i = 0; i < this.length; i++){
+        result.push("\\u" + ("000" + this[i].charCodeAt(0).toString(16)).substr(-4));
+    }
+    return result;
+};
 element2.addEventListener("drop", function (e) {
     room_checker();
     element2.style.boxSizing="border-box";
@@ -23,14 +30,31 @@ element2.addEventListener("drop", function (e) {
 	if(!type_list) return;
 
     e.preventDefault();
-
+    
    var filereader = new FileReader();
    if(type_inspection(file)){       //ファイルインスペクション　呼び出しと判定
         filereader.onload = function (e) {
+            
+            var replacementCharacter = '\\ufffd';
+            var fresult=filereader.result.toUnicode()
+            for (var i = 0, len = fresult.length; i < len; i++) {
+                console.log(fresult[i])
+                if ( replacementCharacter == fresult[i] ) {
+                    status = '文字化けがあります👻';
+                    break;
+                }
+                else {
+                    status = 'きれいなデータです🙂';
+                }
+            
+            }
+            
+            window.console.log(status); // result "文字化けがあります👻" 
+
             makeCSV(filereader.result)　　//filereader.result　＝　データ内容
         }
-        filereader.readAsText(file[0])
-        //        reader.readAsText(fileData, 'Shift_JIS');
+        filereader.readAsText(file[0], 'Shift-jis');
+        //reader.readAsText(fileData, 'Shift_JIS');
    }
     
 });
