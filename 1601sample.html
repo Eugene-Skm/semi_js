@@ -13,7 +13,7 @@
 <body onload="basicscription()" id="dynamicdz"> 
     <!--<div id="X" style="display: inline-block; position: absolute; z-index: 80; box-sizing: border-box; background: #ffffff; width: 400px; min-height: 150px; height: auto; top: 50%; left: 50%; transform: translate(-50%,-50%); padding: 5px; box-shadow: #888888 2px 3px 2px; border: solid #cccccc 1px; border-radius: 5px;">
         このシステムでは生徒を教室机、1列目の左から右、2列目の左から右、3列目。。。という順で並べます。
-        <form style="display: inline-flex; flex-direction: column; width: 100%; box-sizing: border-box; padding: 10px;">
+        <form name="option_form"style="display: inline-flex; flex-direction: column; width: 100%; box-sizing: border-box; padding: 10px;">
             <div>
                 
                 
@@ -21,18 +21,22 @@
                 <select name="sort_select" id="sort_order" style="display: inline-block; margin: 5px; border: solid 1px #000000;">
                     <option value="rand">ランダム順</option>
                 </select>
+                <select name="sort_select" onchange="set_onchanger()" id="sort_direction" style="display: inline-block; margin: 5px; border: solid 1px #000000;">
+                    <option value="up">昇順</option>
+                    <option value="down">降順</option>
+                </select>
             </div>
             <div style="display: inline-flex; flex-direction: row;">
                 <label for="select">席の埋まり方</label>
-                <select name="sort_select" id="sort_order" style="display: inline-block; margin: 5px;border: solid 1px #000000;">
-                    <option value="rand">席間隔指定</option>
-                    <option value="rand">列間隔指定</option>
-                    <option value="rand">市松模様状</option>
+                <select name="how_set" onchange="set_onchanger()" id="how_set" style="display: inline-block; margin: 5px;border: solid 1px #000000;">
+                    <option value="chair">席間隔指定</option>
+                    <option value="cols">列間隔指定</option>
+                    <option value="check">市松模様状</option>
                 </select>
-                <select name="sort_select" id="sort_order" style="display: inline-block; margin: 5px;border: solid 1px #000000;">
-                    <option value="rand">1</option>
-                    <option value="rand">2</option>
-                    <option value="rand">3</option>
+                <select name="set_num" onchange='set_onchanger()' id="set_num" style="display: inline-block; margin: 5px;border: solid 1px #000000;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
                 </select>
             </div>
             
@@ -46,7 +50,7 @@
        <style>
             .room {
                 display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
                 grid-gap: 10px;
             }
 
