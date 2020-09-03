@@ -98,7 +98,7 @@ function id_set(){　//座席へのIDセット
 
 //部屋の行列数チェック　（1601のような規則的な部屋のみ）
 function room_checker(){
-    var tag_type=room_block_data.tagName
+    var tag_type=room_block_data.tagName;
     var display_style = window.getComputedStyle(room_block_data);
     if (display_style.display=="grid"){
 
@@ -145,10 +145,11 @@ String.prototype.toUnicode = function(){
 element2.addEventListener("drop", function (e) {
     element2.style.boxSizing="border-box";
     element2.style.border="none";
+    var dd_tag_type=room_block_data.tagName
 	var file = e.dataTransfer.files;
-	var data_transfer = e.dataTransfer;
+	/*var data_transfer = e.dataTransfer;
     var type_list = data_transfer.types;
-	if(!type_list) return;
+	if(!type_list) return;*/
 
     e.preventDefault();
    
@@ -184,6 +185,7 @@ element2.addEventListener("drop", function (e) {
         //reader.readAsText(fileData, 'Shift_JIS');
    }
     
+   element.value = "";
 });
 //--------------------------　ドラッグドロップ　直Inputの場合----------------------------
 //Inputがないとできないので制約がある
