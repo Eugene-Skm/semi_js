@@ -236,12 +236,12 @@ function type_inspection(f){
     var Fname = f[0].name;
     var dotpos = Fname.lastIndexOf("."); //ドット位置
     var Ftype=Fname.slice(dotpos + 1);
-    if (Ftype != "csv") {
+    if (Ftype == "xls"||Ftype == "csv") {
+        return true;
+    } else {
         alert("CSV以外は使用できません");
         element.value = "";
         return false;
-    } else {
-        return true;
     }
 }
 
@@ -374,7 +374,6 @@ function name_set(){
                     roop_flg=1;
                 }
             }
-            
             if(cos%2==0){
                 if(row_check%2==0){
                     index_counter++;
