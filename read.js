@@ -135,31 +135,22 @@ element2.addEventListener("dragleave", function (e) {
     element2.style.border="none";
 });
 
-String.prototype.toUnicode = function(){
-    var result = [];
-    for(var i = 0; i < this.length; i++){
-        result.push("\\u" + ("000" + this[i].charCodeAt(0).toString(16)).substr(-4));
-    }
-    return result;
-};
 element2.addEventListener("drop", function (e) {
     element2.style.boxSizing="border-box";
     element2.style.border="none";
-    var dd_tag_type=room_block_data.tagName
-	var file = e.dataTransfer.files;
+    var file = e.dataTransfer.files;
+    e.preventDefault();
 	/*var data_transfer = e.dataTransfer;
     var type_list = data_transfer.types;
 	if(!type_list) return;*/
 
-    e.preventDefault();
    
    if(type_inspection(file)){       //ファイルインスペクション　呼び出しと判定
-        //複数文字コード対応チャレンジの残骸
-        //var charset_list=["Shift-jis","utf-8","UTF-16","EUC-JP"]
-        var trycount=0;
-        var filereader = new FileReader();
+    encode_error_check(file);
+      /*  var filereader = new FileReader();
+        filereader.readAsText(file[0],"Shift-jis");
         filereader.onload = function (e) {
-            
+            var trycount=0;
             var replacementCharacter = '\\ufffd';
             var fresult=filereader.result.toUnicode()
             for (var i = 0, len = fresult.length; i < len; i++) {
@@ -172,19 +163,9 @@ element2.addEventListener("drop", function (e) {
             }else{
                 alert("文字化けがあります。うまく読み込めませんでした");
             }
-            
         }
-        filereader.readAsText(file[0],"Shift-jis");
-        //複数文字コード対応チャレンジの残骸
-        //filereader.readAsText(file[0],charset_list[trycount]);
-       /* if(flg==1){
-            makeCSV(filereader.result);
-        }else if(trycount>=charset_list.length && flg==0){
-            alert("ファイルエンコーディングエラーです。")
-        }*/
-        //reader.readAsText(fileData, 'Shift_JIS');
-   }
-    
+   }*/
+}
    element.value = "";
 });
 //--------------------------　ドラッグドロップ　直Inputの場合----------------------------
@@ -192,14 +173,10 @@ element2.addEventListener("drop", function (e) {
 var element = document.getElementById("drop-zone");
 //var inputfile = document.getElementById('drop-zone')
 element.addEventListener("dragover", function (e) {
-    e.preventDefault();
-    //通常のファイルが開く動作の停止
     element.style.boxSizing="border-box";
     element.style.border="Solid 10px #cc2222";
 });
 element.addEventListener("dragleave", function (e) {
-    e.preventDefault();
-    //通常のファイルが開く動作の停止
     element.style.boxSizing="border-box";
     element.style.border="none";
 });
@@ -208,9 +185,11 @@ var a = element.addEventListener("change", function (e) {
     element.style.boxSizing="border-box";
     element.style.border="none";
     var file = element.files;
-    var reader = new FileReader()
-
+    
     if (type_inspection(file)) {　　　//ファイルインスペクション　呼び出しと判定
+    encode_error_check(file);
+
+        /*var reader = new FileReader()
         reader.readAsText(file[0],"Shift-jis")
         reader.onload = function () {
             var trycount=0;
@@ -222,16 +201,14 @@ var a = element.addEventListener("change", function (e) {
                 }
             }
             if(trycount==0){
+                console.log(reader.result);
                 makeCSV(reader.result);     //filereader.result　＝　データ内容
             }else{
                 alert("文字化けがあります。うまく読み込めませんでした");
             }
-            
-        }
+        }*/
     }
-    
     element.value = "";
-
 }, false);
 
 //ファイルタイプ監査　csv 以外はFalse　csvはtrue　を返す
@@ -248,7 +225,33 @@ function type_inspection(f){
         return false;
     }
 }
-
+String.prototype.toUnicode = function(){
+    var result = [];
+    for(var i = 0; i < this.length; i++){
+        result.push("\\u" + ("000" + this[i].charCodeAt(0).toString(16)).substr(-4));
+    }
+    return result;
+};
+var filereader = new FileReader();
+function encode_error_check(f){
+        filereader.readAsText(f[0],"Shift-jis");
+        filereader.onload = function (e) {
+            var trycount=0;
+            var replacementCharacter = '\\ufffd';
+            var fresult=filereader.result.toUnicode()
+            for (var i = 0, len = fresult.length; i < len; i++) {
+                if ( replacementCharacter == fresult[i] ) {
+                    trycount++;
+                }
+            }
+            if(trycount==0){
+                makeCSV(filereader.result);
+            }else{
+                alert("文字化けがあります。うまく読み込めませんでした");
+                return false;
+            }
+        }
+}
 /*-------------------データ形成---CSV処理系------------*/
 //CSVをデータ化する関数
 var members=[];
