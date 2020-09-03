@@ -227,6 +227,8 @@ var a = element.addEventListener("change", function (e) {
             
         }
     }
+    
+    element.value = "";
 
 }, false);
 
