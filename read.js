@@ -109,13 +109,12 @@ function room_checker(){
         var grcolu = style.gridTemplateColumns;　　　//grid のCSS　列数取得　
         //空白でスプリットして結果配列の長さを取得　（教室での列数）
         var colm_nums=grcolu.split(" ").length;
-        
         var row_nums= Math.ceil(desk_count/colm_nums);　　//行数
         
     }else if(tag_type=="table"){ //さて、、Table タグの場合は？？
 
     }
-    return[desk_count, colm_nums, row_nums]
+    return[desk_count, colm_nums, row_nums]; //結果返却
 }
 
 //-------------------　ドラッグドロップ　のみの場合（ボタンなし）--------------------
@@ -135,37 +134,15 @@ element2.addEventListener("dragleave", function (e) {
     element2.style.border="none";
 });
 
-element2.addEventListener("drop", function (e) {
+element2.addEventListener("drop", function (e) { //divの場合はdropイベントが使える
     element2.style.boxSizing="border-box";
     element2.style.border="none";
-    var file = e.dataTransfer.files;
+    var file = e.dataTransfer.files;  //ファイルデータ読み込み div ver
     e.preventDefault();
-	/*var data_transfer = e.dataTransfer;
-    var type_list = data_transfer.types;
-	if(!type_list) return;*/
 
-   
    if(type_inspection(file)){       //ファイルインスペクション　呼び出しと判定
-    encode_error_check(file);
-      /*  var filereader = new FileReader();
-        filereader.readAsText(file[0],"Shift-jis");
-        filereader.onload = function (e) {
-            var trycount=0;
-            var replacementCharacter = '\\ufffd';
-            var fresult=filereader.result.toUnicode()
-            for (var i = 0, len = fresult.length; i < len; i++) {
-                if ( replacementCharacter == fresult[i] ) {
-                    trycount++;
-                }
-            }
-            if(trycount==0){
-                makeCSV(filereader.result);　　//filereader.result　＝　データ内容
-            }else{
-                alert("文字化けがあります。うまく読み込めませんでした");
-            }
-        }
-   }*/
-}
+        encode_error_check(file);
+    }
    element.value = "";
 });
 //--------------------------　ドラッグドロップ　直Inputの場合----------------------------
@@ -181,32 +158,13 @@ element.addEventListener("dragleave", function (e) {
     element.style.border="none";
 });
 
-var a = element.addEventListener("change", function (e) {
+var a = element.addEventListener("change", function (e) {   //Input にファイルが入った検出はchange
     element.style.boxSizing="border-box";
     element.style.border="none";
-    var file = element.files;
+    var file = element.files;       //ファイルデータ読み込み input ver
     
     if (type_inspection(file)) {　　　//ファイルインスペクション　呼び出しと判定
-    encode_error_check(file);
-
-        /*var reader = new FileReader()
-        reader.readAsText(file[0],"Shift-jis")
-        reader.onload = function () {
-            var trycount=0;
-            var replacementCharacter = '\\ufffd';
-            var fresult=reader.result.toUnicode()
-            for (var i = 0, len = fresult.length; i < len; i++) {
-                if ( replacementCharacter == fresult[i] ) {
-                    trycount++;
-                }
-            }
-            if(trycount==0){
-                console.log(reader.result);
-                makeCSV(reader.result);     //filereader.result　＝　データ内容
-            }else{
-                alert("文字化けがあります。うまく読み込めませんでした");
-            }
-        }*/
+        encode_error_check(file);
     }
     element.value = "";
 }, false);
@@ -225,6 +183,7 @@ function type_inspection(f){
         return false;
     }
 }
+//https://kazunori-miura.tumblr.com/post/184943707351/javascriptで文字化けを検知する
 String.prototype.toUnicode = function(){
     var result = [];
     for(var i = 0; i < this.length; i++){
@@ -268,7 +227,9 @@ function makeCSV(csvdata) {
         }
     };
     for (var i = 0; i < members_e.length; ++i) {
-        if (members_e[i].length != 1) members.push(members_e[i]);
+        if (members_e[i].length != 1){  //空配列削除
+            members.push(members_e[i]);
+        }
     }
     console.log(members);
     if(first_load==0){
@@ -293,30 +254,28 @@ function select_option_set(m_list){
 //ユーザーのソート選択に応じてリストの順番変更
 function list_sort(ms_data){    
     var result=[];
-    if(sort_selecter.value=="rand"){
-        result.push(ms_data[0])
+    if(sort_selecter.value=="rand"){　　//ランダム選択
+        result.push(ms_data[0]);
         for(var u=1;u<ms_data.length;){
             var rand_place=Math.floor(Math.random()*ms_data.length);
-            if(result[rand_place]==null){
-                result[rand_place]=ms_data[u];
+            if(result[rand_place]==null){　//結果出力様配列の指定箇所が空だった場合
+                result[rand_place]=ms_data[u];　//挿入
                 u++;
             }
         }
-    }else{
+    }else{                              //指定の列内容で並べかえ
         var col_index=parseInt(sort_selecter.value);
         var dire= sort_dir.value;
         console.log(col_index,dire)
         var firrow=ms_data[0];
         ms_data.shift();
-        if(dire=="up"){
-            // 昇順
+        if(dire=="up"){     // 昇順
             result= ms_data.sort(function(a, b) {
                 A=a[col_index].toString();
                 B=b[col_index].toString();
                 return A.localeCompare(B,'ja');
             });
-        }else{
-            // 降順
+        }else{              // 降順
             result= ms_data.sort(function(a, b) {
                 A=a[col_index].toString();
                 B=b[col_index].toString();
