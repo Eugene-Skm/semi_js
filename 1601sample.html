@@ -232,8 +232,10 @@
             </div>
         </div>
         <!-- ボタン表示したくないときはlabelで囲い　for 関連付け-->
-        <input type="file" value="a" id="drop-zone" style="display: block; width:400px; height:300px; background:#ccf;">
-        <br>
+        inputのドラッグドロップエリア（従来のファイルダイアログが利用できる）<br>
+		<input type="file" value="a" id="drop-zone" style="display: block; width:400px; height:300px; background:#ccf;">
+		<br>
+		divのみのドラッグドロップエリア(Bodyでもどこでもタグにかかわらずidさえ指定すれば使える)<br>
         <div for="drop-zone2" id="drop_zone2" style="display: inline-block; width:400px; height:300px; background:#ccf;"></div>
         
     </main>

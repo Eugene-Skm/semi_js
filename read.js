@@ -3,7 +3,25 @@
 //HTML側は部屋を形成するWrapper部分、ドロップゾーン部分に　id　が必要
 //Table型Room未対応
 //CSV読み込みは　Sjis型
+/* 主要部分
+        事前準備
+        HTML onload > basicscription() > grid_id_set()　（グリッドの場合）
+                                    > room_checker() > grid_id_set()　（テーブルの場合）
+
+        ドラドロ検出(イベントリスナーにて) > make_csv()　> HTML　セッティング表示
+        セッティング　input 値の変化　set_onchanger() (設定と机の必要数の比較　>エラー検出（人数に対する机不足）)
+        
+        最終出力
+        セッティング　submit > name_set() 
+
+    その他ファンクション
+        room_tag_judge(), room_display_judge()
+        drag_Effect_on(), drag_Effect_off()
+        type_inspection(), encode_error_check()
+        select_option_set(), list_sort()
+*/
 /*------------------------description-------------------------------------- */
+
 /* ---挿入されるHTML要素のElement取得用事前変数--*/
 var first_load=0;
 var Elemant_sort_sel,Element_set_way,Element_pitch,Element_arrange_set,Element_sort_dir;
@@ -97,29 +115,28 @@ function grid_id_set(){　//座席へのIDセット (grid)
                 var this_id=(alpha_bet[cl]+"-"+(( '00' + rl ).slice( -2 )));
                 desks[desk_number].id=this_id;
                 desks[desk_number].childNodes[1].innerHTML=this_id;
-                room_id_list.push(this_id);
+                room_id_list.push(this_id);             //部屋に存在するつくえのidを事前にリスト化
                 desk_number++;
             };
         }
     }
 }
-function table_id_set(row_c, row_cols,max_rows_c){
+function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テーブルの場合 
     var rn=1;
     room_id_list=[];
 
-    //Element_room=Element_room.childNodes[1];
     console.log(row_cols);
     for(var o=1;o<Element_room.childNodes[1].childElementCount*2;o+=2){
         var this_row_c=Element_room.childNodes[1].childNodes[o].childElementCount;
         console.log(Element_room.childNodes[1].childNodes[o].childElementCount)
         var start=1;
-        if(this_row_c<max_rows_c){
-            start=(max_rows_c-this_row_c)/2;
+        if(this_row_c<max_rows_c){      //その行の机の数が最大値ではない場合　（最大数行あたり10席教室の　前方席など）
+            start=(max_rows_c-this_row_c)/2;    //id 割り振りのオフセットを計算
             for(var g=1;g<this_row_c*2;g+=2){
                 var this_id=(alpha_bet[start]+"-"+(( '00' + rn ).slice( -2 )));
                 Element_room.childNodes[1].childNodes[o].childNodes[g].id=this_id;
                 Element_room.childNodes[1].childNodes[o].childNodes[g].childNodes[1].innerHTML=this_id;
-                room_id_list.push(this_id);
+                room_id_list.push(this_id);//部屋に存在するつくえのidを事前にリスト化
                 start++;
             }
         }else{
@@ -128,7 +145,7 @@ function table_id_set(row_c, row_cols,max_rows_c){
 
                 Element_room.childNodes[1].childNodes[o].childNodes[g].id=this_id;
                 Element_room.childNodes[1].childNodes[o].childNodes[g].childNodes[1].innerHTML=this_id;
-                room_id_list.push(this_id);
+                room_id_list.push(this_id);//部屋に存在するつくえのidを事前にリスト化
                 start++;
             }
         }
@@ -184,13 +201,7 @@ function room_checker(){
         if(first_flg==0){
             table_id_set(row_nums,row_consists,max_row_fig);
         }
-        
-        console.log(desk_count, colm_nums, row_nums)
-        console.log(Element_room)
-
     }
-    console.log(desk_count, colm_nums, row_nums)
-    
     return [desk_count, colm_nums, row_nums,row_consists]; //結果返却
 }
 
@@ -306,8 +317,8 @@ function makeCSV(csvdata) {
             members_e[y][x]=personal[x];
         }
     };
-    for (var i = 0; i < members_e.length; ++i) {
-        if (members_e[i].length != 1){  //空配列削除
+    for (var i = 0; i < members_e.length; ++i) {  //空配列削除
+        if (members_e[i].length != 1){
             members.push(members_e[i]);
         }
     }
@@ -385,30 +396,28 @@ function name_set(){
         document.getElementById(room_id_list[i]).childNodes[3].innerHTML="-";
     }
     var[dsk_sum,cos,ros,rc]=room_checker();
-    console.log(Element_room);
-    if(Element_set_way.value=="chair"){
+    /*出力では　その都度利用する列のアルファベットを指定し
+    頭文字がそのアルファベットに合致するエレメントに名前を挿入
+    */
+
+    if(Element_set_way.value=="chair"){　　 //指定並び順　席間隔
         for(i=0;i<room_id_list.length;i+=step){
-            //document.getElementById(room_id_list[i]).childNodes[3].innerHTML="-";
             if(memberdata[member_count]){
                 document.getElementById(room_id_list[i]).childNodes[3].innerHTML=memberdata[member_count][1];
                 member_count++;
-                if(room_id_list[i+1]){
-                    
-                }
             }
         }
-    }else if(Element_set_way.value=="cols"){
+    }else if(Element_set_way.value=="cols"){        //指定並び順　列間隔
         var use_char=[];
         var w=0;
         for(var j=0;j<cos;j++){
             use_char.push(alpha_bet[w]);
             w+=step;
         }
-        console.log(use_char)
         var Mdata;
         for(var t=0;t<room_id_list.length;t++){
             for(var f=0;f<use_char.length;f++){
-                if(room_id_list[t][0]==use_char[f]){
+                if(room_id_list[t][0]==use_char[f]){        //リスト化された部屋のIDから　アルファベットに合致するIDを検索
                     if(memberdata[member_count]){
                         document.getElementById(room_id_list[t]).childNodes[3].innerHTML= memberdata[member_count][1];
                         member_count++;
@@ -418,19 +427,16 @@ function name_set(){
             }
         }
         
-    }else if(Element_set_way.value=="check"){
+    }else if(Element_set_way.value=="check"){        //指定並び順　市松模様
         room_list_index=0;
         var b=0;
         var use_char=[];
         var w=0;
         
         for(var t=0;t<room_id_list.length;t++){
-            
-        console.log("b",b)
             if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())!=b){
-
                 b++;
-                if(b%2==0){
+                if(b%2==0){     //市松模様のため　行ごとに使用アルファベットを変更
                     use_char=[];
                     w=1;
                     for(var j=0;j<cos;j++){
@@ -445,15 +451,11 @@ function name_set(){
                         w+=2;
                     }
                 }
-                
             }
             if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
                 for(var f=0;f<use_char.length;f++){
                     if(room_id_list[t][0]==use_char[f]&&parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
-                        
-                        console.log(room_id_list[t])
                         if(memberdata[member_count]){
-
                         document.getElementById(room_id_list[t]).childNodes[3].innerHTML= memberdata[member_count][1];
                         member_count++;
                         }
