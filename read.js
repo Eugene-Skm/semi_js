@@ -392,7 +392,7 @@ function name_set(){
                     document.getElementById(room_id_list[i]).childNodes[3].innerHTML=memberdata[member_count][1];
                     member_count++;
                 }
-            }
+            } 
         }else if(Element_set_way.value=="cols"){
             var r_count=0;
             for(var r=0; r<dsk_sum; r+=cos){
