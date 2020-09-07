@@ -143,8 +143,10 @@ function room_tag_judge(){
 function room_display_judge(){
     return window.getComputedStyle(Element_room);
 }
-var first_flg=0;
+
+
 //部屋の行列数チェック　（1601のような規則的な部屋のみ）
+var first_flg=0;
 function room_checker(){
     tag_type=room_tag_judge();
     var display_style = room_display_judge();
@@ -380,151 +382,84 @@ function name_set(){
     var step=parseInt(Element_pitch.value)+1; //座席間隔　デフォルト値2　＝1席おき
     for(i=0;i<room_id_list.length;i++){
         console.log(room_id_list[i]);
-        document.getElementById(room_id_list[i]).childNodes[3].innerHTML="";
+        document.getElementById(room_id_list[i]).childNodes[3].innerHTML="-";
     }
     var[dsk_sum,cos,ros,rc]=room_checker();
     console.log(Element_room);
-    /*if(room_display_judge().display=="g"){
+    if(Element_set_way.value=="chair"){
+        for(i=0;i<room_id_list.length;i+=step){
+            //document.getElementById(room_id_list[i]).childNodes[3].innerHTML="-";
+            if(memberdata[member_count]){
+                document.getElementById(room_id_list[i]).childNodes[3].innerHTML=memberdata[member_count][1];
+                member_count++;
+                if(room_id_list[i+1]){
+                    
+                }
+            }
+        }
+    }else if(Element_set_way.value=="cols"){
+        var use_char=[];
+        var w=0;
+        for(var j=0;j<cos;j++){
+            use_char.push(alpha_bet[w]);
+            w+=step;
+        }
+        console.log(use_char)
+        var Mdata;
+        for(var t=0;t<room_id_list.length;t++){
+            for(var f=0;f<use_char.length;f++){
+                if(room_id_list[t][0]==use_char[f]){
+                    if(memberdata[member_count]){
+                        document.getElementById(room_id_list[t]).childNodes[3].innerHTML= memberdata[member_count][1];
+                        member_count++;
+                        break;
+                    }
+                }
+            }
+        }
         
-        if(Element_set_way.value=="chair"){
-            for(i=0;i<room_id_list.length;i+=step){
-                    if(memberdata[member_count]){
-                    document.getElementById(room_id_list[i]).childNodes[3].innerHTML=memberdata[member_count][1];
-                    member_count++;
-                }
-            } 
-        }else if(Element_set_way.value=="cols"){
-            var r_count=0;
-            for(var r=0; r<dsk_sum; r+=cos){
-                for(var b=0; b<cos;b+=step){
-                    console.log("r_count",r_count);
-                    if(memberdata[member_count]){
-                        document.getElementById(room_id_list[r_count]).childNodes[3].innerHTML=memberdata[member_count][1];
-                        member_count++;
+    }else if(Element_set_way.value=="check"){
+        room_list_index=0;
+        var b=0;
+        var use_char=[];
+        var w=0;
+        
+        for(var t=0;t<room_id_list.length;t++){
+            
+        console.log("b",b)
+            if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())!=b){
+
+                b++;
+                if(b%2==0){
+                    use_char=[];
+                    w=1;
+                    for(var j=0;j<cos;j++){
+                        use_char.push(alpha_bet[w]);
+                        w+=2;
                     }
-                    r_count+=step;
-                }
-                r_count=r_count-(r_count%cos);
-            }
-        }else if(Element_set_way.value=="check"){
-            var roop_flg=0;
-            var row_check=0;
-            var index_counter=0;
-            while(index_counter<dsk_sum&&roop_flg==0){
-                console.log(index_counter,dsk_sum);
-                for(var h=0; h<cos;h+=step){
-                    if(memberdata[member_count]){
-                        document.getElementById(room_id_list[index_counter]).childNodes[3].innerHTML=memberdata[member_count][1];
-                        member_count++;
-                        index_counter+=step;
-                    }else if(!memberdata[member_count]){
-                        console.log("#")
-                        roop_flg=1;
-                    }
-                }
-                if(cos%2==0){
-                    if(row_check%2==0){
-                        index_counter++;
-                    }else if(row_check%2==1){
-                        index_counter--;
-                    }
-                }else if(cos%2==1){
-                    //nothing
-                }
-                row_check++;
-            }
-        }
-    }else if(room_display_judge().display=="grid"){*/
-        if(Element_set_way.value=="chair"){
-            for(i=0;i<room_id_list.length;i+=step){
-                    if(memberdata[member_count]){
-                    document.getElementById(room_id_list[i]).childNodes[3].innerHTML=memberdata[member_count][1];
-                    member_count++;
-                }
-            }
-        }else if(Element_set_way.value=="cols"){
-            var use_char=[];
-            var w=0;
-            for(var j=0;j<cos;j++){
-                use_char.push(alpha_bet[w]);
-                w+=step;
-            }
-            console.log(use_char)
-            var space_check=0;
-            var Mdata;
-            for(var t=0;t<room_id_list.length;t++){
-                for(var f=0;f<use_char.length;f++){
-                    if(room_id_list[t][0]==use_char[f]){
-                        if(memberdata[member_count]){
-                            document.getElementById(room_id_list[t]).childNodes[3].innerHTML= memberdata[member_count][1];
-                            space_check=99;
-                            member_count++;
-                            break;
-                        }
-                    }
-                }
-                if(space_check==0){
-                    document.getElementById(room_id_list[t]).childNodes[3].innerHTML= "-";
-                    space_check=0;
                 }else{
-                    space_check=0;
+                    use_char=[];
+                    w=0;
+                    for(var j=0;j<cos;j++){
+                        use_char.push(alpha_bet[w]);
+                        w+=2;
+                    }
                 }
                 
             }
-            
-        }else if(Element_set_way.value=="check"){
-            room_list_index=0;var b=0;
-                var use_char=[];
-                var w=0;
-                
-                for(var t=0;t<room_id_list.length;t++){
-                    
-                console.log("b",b)
-                    if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())!=b){
-
-                        b++;
-                        if(b%2==0){
-                            use_char=[];
-                            w=1;
-                            for(var j=0;j<cos;j++){
-                                use_char.push(alpha_bet[w]);
-                                w+=2;
-                            }
-                        }else{
-                            use_char=[];
-                            w=0;
-                            for(var j=0;j<cos;j++){
-                                use_char.push(alpha_bet[w]);
-                                w+=2;
-                            }
-                        }
+            if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
+                for(var f=0;f<use_char.length;f++){
+                    if(room_id_list[t][0]==use_char[f]&&parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
                         
-                    }
-                    if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
-                        for(var f=0;f<use_char.length;f++){
-                            if(room_id_list[t][0]==use_char[f]&&parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
-                                
-                                console.log(room_id_list[t])
-                                if(memberdata[member_count]){
+                        console.log(room_id_list[t])
+                        if(memberdata[member_count]){
 
-                                document.getElementById(room_id_list[t]).childNodes[3].innerHTML= memberdata[member_count][1];
-                                member_count++;
-                                space_check=99;
-                                }
-                            }
-                        }
-                        if(space_check==0){
-                            document.getElementById(room_id_list[t]).childNodes[3].innerHTML= "-";
-                            space_check=0;
-                        }else{
-                            space_check=0;
+                        document.getElementById(room_id_list[t]).childNodes[3].innerHTML= memberdata[member_count][1];
+                        member_count++;
                         }
                     }
-                    
-                    
                 }
-            
+            }
         }
-    //}
-    
+    }
 }
