@@ -425,7 +425,7 @@ function name_set(){
     var memberdata=list_sort(members);
     var classnm = prompt("授業名を入力してください");
     var teachernm = prompt("教員名を入力してください");
-    document.getElementById("classdata").innerHTML="授業名："+classnm+"<br>担当教員名："+teachernm+"<br>学生数："+members.length-1;
+    document.getElementById("classdata").innerHTML="授業名："+classnm+"<br>担当教員名："+teachernm+"<br>学生数："+(members.length-1);
     var member_count=1;
     
     var step=parseInt(Element_pitch.value)+1; //座席間隔　デフォルト値2　＝1席おき
