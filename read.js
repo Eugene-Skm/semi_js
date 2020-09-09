@@ -15,7 +15,7 @@
         セッティング　submit > name_set() 
 
     その他ファンクション
-        room_tag_judge(), room_display_judge()
+        get_tagName(), get_element_style()
         drag_Effect_on(), drag_Effect_off()
         type_inspection(), encode_error_check()
         select_option_set(), list_sort()
@@ -27,6 +27,8 @@ var first_load=0;
 var Elemant_sort_sel,Element_set_way,Element_pitch,Element_arrange_set,Element_sort_dir;
 var Element_room=document.getElementById('room');
 var alpha_bet =["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U"];
+var odd_alpha_bet =["A","C","E","G","I","K","M","O","Q","S","U"];
+var even_alpha_bet =["B","D","F","H","J","L","N","P","R","T","V"];
 function basicscription(){  //最も最初の処理
     var newElement = document.createElement("div"); // p要素作成
     //var newContent = document.createTextNode("子要素１"); // テキストノードを作成
@@ -44,8 +46,7 @@ function basicscription(){  //最も最初の処理
     Element_sort_dir=document.getElementById("sort_direction");
     
     Element_arrange_set.style.display="none"
-    console.log(room_display_judge())
-    if(room_display_judge().display=="grid"){
+    if(get_element_style(Element_room).display=="grid"){
         grid_id_set();　//座席へのIDセット
     }else{
         room_checker();
@@ -63,36 +64,47 @@ function set_onchanger(){
     }else{
         Element_sort_dir.style.display="inline-block";
     }
-    var[dsk_sum,cos,ros]=room_checker();
-    console.log(room_checker());
+    var[dsk_sum,cos,ros,rc,cc]=room_checker();
     var deskfig;
-    var sef=parseInt(Element_pitch.value);
+    var pitch=parseInt(Element_pitch.value);
     var error_flg=0;
+    var sitemens;
     if(Element_set_way.value=="chair"){
-        console.log("jj")
-        deskfig=(sef + 1) * (members.length-1)-sef;
-        if(deskfig>dsk_sum && sef==1) error_flg=1;
+        deskfig=(pitch + 1) * (members.length-1)-pitch;
+        if(deskfig>dsk_sum && pitch==1) error_flg=1;
     }else if(Element_set_way.value=="cols"){
-        var need_rows = Math.floor((members.length-1)/ Math.ceil(cos/(sef + 1)));
-        var spare_people=(members.length-1)% Math.ceil(cos/(sef + 1));
-        var neet_desk=need_rows*cos;
-        var spare_people_desk=(spare_people*(sef+1))-sef;
-        deskfig=neet_desk+spare_people_desk;
-    }else if(Element_set_way.value=="check"){
-        if(cos%2==0){
-            if((members.length-1)%(cos)<=(cos/2)){
-                deskfig=(members.length-1)*2-1;
-            }else if((members.length-1)%(cos)>(cos/2)){
-                deskfig=(members.length-1)*2;
-            }
-        }else{
-            deskfig=members*2;
+    sitemens=0;
+        
+        for(var g=0;g<cc.length;g+=pitch+1){
+            sitemens+=cc[g];
         }
+    }else if(Element_set_way.value=="check"){
+        sitemens=0;
+
+        for(var f=0;f<rc.length;f++){
+            var start=(cos-rc[f])/2
+            var end=start+rc[f]-1;
+            if(f%2==0){     //市松模様のため　行ごとに使用アルファベットを変更
+                use_char=even_alpha_bet;
+            }else{
+                use_char=odd_alpha_bet;
+            }
+            for(var w=start;w<=end;w++){
+                for(var q=0;q<use_char.length;q++){
+                    if(alpha_bet[w]==use_char[q]){
+                        sitemens++;
+                    }
+                }
+            }
+        }
+        
     }
     console.log("needdesk",deskfig);
-    console.log("needdesk",dsk_sum);
+    console.log("desknum",dsk_sum);
+    console.log("sitemems",sitemens);
+    console.log("member",members.length-1);
 
-    if(deskfig>dsk_sum&&error_flg==0){
+    if((deskfig>dsk_sum&&error_flg==0)||sitemens<members.length-1){
         alert("人数に対し机の数が足りません")
         Element_pitch.options[0].selected = true;
         Element_set_way.options[0].selected = true;
@@ -115,7 +127,9 @@ function grid_id_set(){　//座席へのIDセット (grid)
                 var this_id=(alpha_bet[cl]+"-"+(( '00' + rl ).slice( -2 )));
                 desks[desk_number].id=this_id;
                 desks[desk_number].childNodes[1].innerHTML=this_id;
-                room_id_list.push(this_id);             //部屋に存在するつくえのidを事前にリスト化
+                if(get_element_style(desks[desk_number]).visibility!="hidden"){
+                    room_id_list.push(this_id);             //部屋に存在するつくえのidを事前にリスト化
+                }
                 desk_number++;
             };
         }
@@ -125,10 +139,8 @@ function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テ�
     var rn=1;
     room_id_list=[];
 
-    console.log(row_cols);
     for(var o=1;o<Element_room.childNodes[1].childElementCount*2;o+=2){
         var this_row_c=Element_room.childNodes[1].childNodes[o].childElementCount;
-        console.log(Element_room.childNodes[1].childNodes[o].childElementCount)
         var start=1;
         if(this_row_c<max_rows_c){      //その行の机の数が最大値ではない場合　（最大数行あたり10席教室の　前方席など）
             start=(max_rows_c-this_row_c)/2;    //id 割り振りのオフセットを計算
@@ -142,7 +154,6 @@ function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テ�
         }else{
             for(var g=1;g<max_rows_c*2;g+=2){
                 var this_id=(alpha_bet[start-1]+"-"+(( '00' + rn ).slice( -2 )));
-
                 Element_room.childNodes[1].childNodes[o].childNodes[g].id=this_id;
                 Element_room.childNodes[1].childNodes[o].childNodes[g].childNodes[1].innerHTML=this_id;
                 room_id_list.push(this_id);//部屋に存在するつくえのidを事前にリスト化
@@ -154,37 +165,58 @@ function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テ�
     //Element_room=Element_room.parentNode;
     console.log(room_id_list);
 }
-function room_tag_judge(){
-    return Element_room.tagName;
+function get_element_style(ele){
+    return window.getComputedStyle(ele);　
 }
-function room_display_judge(){
-    return window.getComputedStyle(Element_room);
+function get_tagName(Ele){
+    return Ele.tagName;
 }
-
 
 //部屋の行列数チェック　（1601のような規則的な部屋のみ）
 var first_flg=0;
 function room_checker(){
-    tag_type=room_tag_judge();
-    var display_style = room_display_judge();
-    var desk_count=0,colm_nums,row_nums;
-    console.log(tag_type)
-    if (display_style.display=="grid"){
+    tag_type=get_tagName(Element_room);
+    var desk_count=0,colm_nums,row_nums,col_consist=[],row_consists=[];
+    if (get_element_style(Element_room).display=="grid"){
 
         //子要素数 (gridの場合　机の総数となる)
         desk_count = Element_room.childElementCount ;
-        style = window.getComputedStyle(Element_room);　　//CSSのプロパティ取得
-        grcolu = style.gridTemplateColumns;　　　//grid のCSS　列数取得　
+        
+        grcolu = get_element_style(Element_room).gridTemplateColumns;　　　//grid のCSS　列数取得　
         //空白でスプリットして結果配列の長さを取得　（教室での列数）
         colm_nums=grcolu.split(" ").length;
         row_nums= Math.ceil(desk_count/colm_nums);　　//行数
+
+        var hiden_desk=0, col_index=0; 
+        for(var o=0;o<colm_nums;o++){
+            col_consist[o]=0;
+        }
+        for(var o=0;o<row_nums;o++){
+            row_consists[o]=0;
+        }
+        var r=0;
+        for(var u=0; u<desk_count;u++){
+
+            if(get_element_style(Element_room.children[u]).visibility=="hidden"){
+                hiden_desk++;
+            }else {
+                col_consist[col_index]++;
+                row_consists[r]++;
+            }
+            col_index++;
+            if(col_index==colm_nums){
+                col_index=0;
+            }
+            if((u+1)%colm_nums==0){
+                r++;
+            }
+
+        }
+        desk_count=desk_count-hiden_desk;
+        
         
     }else if(tag_type=="TABLE"){ //さて、、Table タグの場合は？？
-        console.log("GGG")
-        //Element_room=Element_room.childNodes[1];
         row_nums=Element_room.childNodes[1].childElementCount ;           //机の行数
-        console.log(Element_room.childNodes[1].childNodes[1].childElementCount);
-        var row_consists=[];
         var max_row_fig=0;
         for(var p=1;p<Element_room.childNodes[1].childElementCount*2;p+=2){
             var ro_c=Element_room.childNodes[1].childNodes[p].childElementCount;
@@ -195,14 +227,22 @@ function room_checker(){
             }
         }
         colm_nums=max_row_fig;
-        console.log(row_nums);
-        
-        //Element_room=Element_room.parentNode;
+
         if(first_flg==0){
             table_id_set(row_nums,row_consists,max_row_fig);
         }
+        for(var o=0;o<colm_nums;o++){
+            col_consist[o]=0;
+        }
+        for(var h=0;h<room_id_list.length;h++){
+            var ind =alpha_bet.indexOf(room_id_list[h][0])
+            col_consist[ind]++;
+        }
+        
     }
-    return [desk_count, colm_nums, row_nums,row_consists]; //結果返却
+        console.log(col_consist);
+        console.log(row_consists);
+    return [desk_count, colm_nums, row_nums,row_consists,col_consist]; //結果返却
 }
 
 //-------------------　ドラッグドロップ　のみの場合（ボタンなし）--------------------
@@ -357,7 +397,6 @@ function list_sort(ms_data){
     }else{                              //指定の列内容で並べかえ
         var col_index=parseInt(Elemant_sort_sel.value);
         var dire= Element_sort_dir.value;
-        console.log(col_index,dire)
         var firrow=ms_data[0];
         ms_data.shift();
         if(dire=="up"){     // 昇順
@@ -374,7 +413,6 @@ function list_sort(ms_data){
             });
         }
         ms_data.unshift(firrow);
-    console.log("fresult",result);
     }
     console.log("final_sort_result",result);
     return result;
@@ -387,12 +425,11 @@ function name_set(){
     var memberdata=list_sort(members);
     var classnm = prompt("授業名を入力してください");
     var teachernm = prompt("教員名を入力してください");
-    document.getElementById("classdata").innerHTML="授業名："+classnm+"<br>担当教員名："+teachernm;
+    document.getElementById("classdata").innerHTML="授業名："+classnm+"<br>担当教員名："+teachernm+"<br>学生数："+members.length-1;
     var member_count=1;
     
     var step=parseInt(Element_pitch.value)+1; //座席間隔　デフォルト値2　＝1席おき
     for(i=0;i<room_id_list.length;i++){
-        console.log(room_id_list[i]);
         document.getElementById(room_id_list[i]).childNodes[3].innerHTML="-";
     }
     var[dsk_sum,cos,ros,rc]=room_checker();
@@ -426,7 +463,6 @@ function name_set(){
                 }
             }
         }
-        
     }else if(Element_set_way.value=="check"){        //指定並び順　市松模様
         room_list_index=0;
         var b=0;
@@ -437,19 +473,9 @@ function name_set(){
             if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())!=b){
                 b++;
                 if(b%2==0){     //市松模様のため　行ごとに使用アルファベットを変更
-                    use_char=[];
-                    w=1;
-                    for(var j=0;j<cos;j++){
-                        use_char.push(alpha_bet[w]);
-                        w+=2;
-                    }
+                    use_char=even_alpha_bet;
                 }else{
-                    use_char=[];
-                    w=0;
-                    for(var j=0;j<cos;j++){
-                        use_char.push(alpha_bet[w]);
-                        w+=2;
-                    }
+                    use_char=odd_alpha_bet;
                 }
             }
             if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
