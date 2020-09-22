@@ -19,6 +19,15 @@
         drag_Effect_on(), drag_Effect_off()
         type_inspection(), encode_error_check()
         select_option_set(), list_sort()
+
+        https://hakuhin.jp/js/drag_drop.html#DRAG_DROP_04
+        https://hakuhin.jp/js/file_reader.html#FILE_READER_READ_AS_DATA_URI_SCHEME
+        https://lab.syncer.jp/Web/API_Interface/Reference/IDL/FileReader/result/
+        https://qiita.com/ginpei/items/5cebb14e210fc0770e94
+
+        https://note.kiriukun.com/entry/20181129-sort-with-local-compare
+        
+
 */
 /*------------------------description-------------------------------------- */
 
@@ -97,7 +106,6 @@ function set_onchanger(){
                 }
             }
         }
-        
     }
     console.log("needdesk",deskfig);
     console.log("desknum",dsk_sum);
