@@ -26,7 +26,6 @@
         https://qiita.com/ginpei/items/5cebb14e210fc0770e94
 
         https://note.kiriukun.com/entry/20181129-sort-with-local-compare
-        
 
 */
 /*------------------------description-------------------------------------- */
