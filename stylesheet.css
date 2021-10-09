@@ -1,0 +1,71 @@
+@charset "utf-8";
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+header {
+  height: 70px;
+  background: #000;
+}
+
+.Logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 35px;
+  color: #f2f2f2;
+  line-height: 70px;
+}
+
+main {
+  background: #fff;
+  height: 450px;
+}
+
+li {
+  padding-left: 10%;
+  margin-bottom: 20px;
+}
+
+p {
+  text-align: center;
+  font-size: 24px;
+  padding: 30px;
+}
+
+a {
+  color: #000;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+}
+
+a:hover {
+  color: gray;
+}
+
+#footer {
+  background: #000;
+  color: #fff;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+}
+

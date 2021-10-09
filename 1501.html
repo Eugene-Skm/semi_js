@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>座席指定システム出力結果のサンプル(1501/1502/1601/1602教室)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jschardet/1.4.1/jschardet.min.js" type="text/javascript" defer></script>
+</head>
+
+<body onload="basicscription()" id="dynamicdz">
+
+  <header>
+    <h1>1501/1502/1601/1602教室席順レイアウト</h1>
+    <style>
+      .room {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-gap: 10px;
+      }
+
+      .item {
+        padding: 5px;
+        border: solid 1px black;
+        margin: 5px 0px;
+      }
+
+      .desk_no {
+        background-color: #FFDDFF;
+      }
+
+      .room_t {
+        display: inline-block;
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        text-align: center;
+      }
+
+      tbody {
+        display: inline-block;
+        width: 100%;
+      }
+
+      tr {
+        display: inline-block;
+        width: 100%;
+
+      }
+
+      .item_t {
+        display: inline-block;
+        table-layout: fixed;
+        width: 9%;
+        margin: 0;
+      }
+    </style>
+
+  </header>
+
+  <main>
+    <h2 id="classdata">授業名：　　　　<br>担当教員名：　　　　</h2>
+    <hr>
+    <!--- Tableタグ内のタグは
+            <table>
+                <tbody>
+                    <tr>　　trの塊が横むき1列　
+                        <td>　  td　一つの固まりが机1個
+                            <div></div>		
+                            <div></div>			
+                        </td>
+                </tr>
+                
+            </tbody>
+        </table>
+     -->
+
+    <table id="room" class="room_t">
+      <tbody>
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+          <td class="item_t">
+            <div class="desk_no">A-01</div>
+            <div class="name"></div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <!-- ボタン表示したくないときはlabelで囲い　for 関連付け-->
+    inputのドラッグドロップエリア（従来のファイルダイアログが利用できる）<br>
+    <input type="file" value="a" id="drop-zone2" style="display: block; width:400px; height:300px; background:#ccf;">
+    <br>
+    <!--
+        divのみのドラッグドロップエリア(Bodyでもどこでもタグにかかわらずidさえ指定すれば使える)<br>
+        <div for="drop-zone" id="drop-zone" style="display: inline-block; width:400px; height:300px; background:#ccf;"></div>
+        -->
+  </main>
+
+  <footer>
+    2021 &copy; Chiba semi, all right reserved.<br>
+    <address>schiba@reitaku.jp</address>
+  </footer>
+  <script src="read.js" type="text/javascript" defer></script>
+
+</body>
+
+</html>

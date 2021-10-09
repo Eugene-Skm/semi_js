@@ -38,25 +38,27 @@ function basicscription(){  //最も最初の処理
 
     Element_arrange_set.innerHTML="<div id='X' style='display:inline-block;position:absolute;z-index:80;box-sizing:border-box;background:#ffffff;width:400px;min-height:150px;height:auto;top:50%;left:50%;transform:translate(-50%,-50%);padding:5px;box-shadow:#888888 2px 3px 2px;border:solid #cccccc 1px;border-radius:5px;'>このシステムでは生徒を教室机、1列目の左から右、2列目の左から右、3列目。。。という順で並べます。<form name='option_form'style='display:inline-flex;flex-direction:column;width:100%;box-sizing:border-box;padding:10px;'><div><label for='select'>席への割り振り順</label><select name='sort_select' onchange='set_onchanger()'id='sort_order'style='display:inline-block;margin:5px;border:solid1px#000000;'><option value='rand'>ランダム順</option></select><select name='sort_select' id='sort_direction' style='display: none; margin: 5px; border: solid 1px #000000;'><option value='up'>昇順</option><option value='down'>降順</option></select></div><div style='display:inline-flex;flex-direction:row;'><label for='select'>席の埋まり方</label><select name='how_set'onchange='set_onchanger()'id='how_set'style='display:inline-block;margin:5px;border:solid1px#000000;'><option value='chair'>席間隔指定</option><option value='cols'>列間隔指定</option><option value='check'>市松模様状</option></select><select name='set_num'id='set_num'onchange='set_onchanger()'style='display:inline-block;margin:5px;border:solid 1px #000000;'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select></div></form><button id='submit' onclick='name_set()'style='display: block; margin-left: auto;margin-right: auto; width: 50%; cursor: pointer;'>確定</button></div>";
     
-    Elemant_sort_sel = document.getElementById("sort_order");
-    Element_set_way = document.getElementById("how_set");
-    Element_pitch = document.getElementById("set_num");
-    Element_sort_dir = document.getElementById("sort_direction");
+    Elemant_sort_sel=document.getElementById("sort_order");
+    Element_set_way=document.getElementById("how_set");
+    Element_pitch=document.getElementById("set_num");
+    Element_sort_dir=document.getElementById("sort_direction");
     
     Element_arrange_set.style.display="none"
-    
-    room_checker();
+    if(get_element_style(Element_room).display=="grid"){
+        grid_id_set();　//座席へのIDセット
+    }else{
+        room_checker();
+    }
 }
-
 function set_onchanger(){
     var back_result=true;
-    if(Element_set_way.value=="check"){　　//市松模様の場合
-        Element_pitch.style.display="none";　　//間隔選択を非表示
-    }else{　　　　　　　　　　　　　　　　　　//それ以外の場合
-        Element_pitch.style.display="inline-block";　//間隔選択を表示
+    if(Element_set_way.value=="check"){
+        Element_pitch.style.display="none";
+    }else{
+        Element_pitch.style.display="inline-block";
     }
-    if(Elemant_sort_sel.value=="rand"){　　//ランダムで並べる場合
-        Element_sort_dir.style.display="none";　//ソート方向　昇順降順　の非表示
+    if(Elemant_sort_sel.value=="rand"){
+        Element_sort_dir.style.display="none";
     }else{
         Element_sort_dir.style.display="inline-block";
     }
@@ -134,7 +136,7 @@ function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テ�
     for(var o=1;o<Element_room.childNodes[1].childElementCount*2;o+=2){
         var this_row_c=Element_room.childNodes[1].childNodes[o].childElementCount;
         var start=1;
-        if(this_row_c<max_rows_c){      //その行の机の数が最大値ではない場合　（1503教室　前方席など）
+        if(this_row_c<max_rows_c){      //その行の机の数が最大値ではない場合　（最大数行あたり10席教室の　前方席など）
             start=(max_rows_c-this_row_c)/2;    //id 割り振りのオフセットを計算
             for(var g=1;g<this_row_c*2;g+=2){
                 var this_id=(alpha_bet[start]+"-"+(( '00' + rn ).slice( -2 )));
@@ -165,8 +167,9 @@ function get_tagName(Ele){
 }
 
 //部屋の行列数チェック　（1601のような規則的な部屋のみ）
+var first_flg=0;
 function room_checker(){
-    tag_type = get_tagName(Element_room);
+    tag_type=get_tagName(Element_room);
     var desk_count=0,colm_nums,row_nums,col_consist=[],row_consists=[];
     if (get_element_style(Element_room).display=="grid"){
 
@@ -186,8 +189,6 @@ function room_checker(){
             row_consists[o]=0;
         }
         var r=0;
-        grid_id_set(row_nums,row_consists,max_row_fig);
-
         for(var u=0; u<desk_count;u++){
 
             if(get_element_style(Element_room.children[u]).visibility=="hidden"){
@@ -221,9 +222,10 @@ function room_checker(){
         }
         colm_nums=max_row_fig;
 
-        table_id_set(row_nums,row_consists,max_row_fig);
-
-        for(var o=0;o<colm_nums;o++){  
+        if(first_flg==0){
+            table_id_set(row_nums,row_consists,max_row_fig);
+        }
+        for(var o=0;o<colm_nums;o++){
             col_consist[o]=0;
         }
         for(var h=0;h<room_id_list.length;h++){
