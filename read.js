@@ -22,7 +22,7 @@
 
 /* ---挿入されるHTML要素のElement取得用事前変数--*/
 var first_load=0;
-var Elemant_sort_sel,Element_set_way,Element_pitch,Element_arrange_set,Element_sort_dir;
+var Elemant_sort_sel,Element_set_way,Element_pitch,Element_arrange_set,Element_sort_dir,Element_1col_emp,Elem_teach_nm,Elem_class_nm;
 var Element_room=document.getElementById('room');
 var alpha_bet =["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U"];
 var odd_alpha_bet =["A","C","E","G","I","K","M","O","Q","S","U"];
@@ -36,15 +36,16 @@ function basicscription(){  //最も最初の処理
     parentDivs[0].insertBefore(newElement, parentDivs[0].firstChild);
     Element_arrange_set=document.getElementById("arrange_setting");
 
-    Element_arrange_set.innerHTML="<div id='X' style='display:inline-block;position:absolute;z-index:80;box-sizing:border-box;background:#ffffff;width:400px;min-height:150px;height:auto;top:50%;left:50%;transform:translate(-50%,-50%);padding:5px;box-shadow:#888888 2px 3px 2px;border:solid #cccccc 1px;border-radius:5px;'>このシステムでは生徒を教室机、1列目の左から右、2列目の左から右、3列目。。。という順で並べます。<form name='option_form'style='display:inline-flex;flex-direction:column;width:100%;box-sizing:border-box;padding:10px;'><div><label for='select'>席への割り振り順</label><select name='sort_select' onchange='set_onchanger()'id='sort_order'style='display:inline-block;margin:5px;border:solid1px#000000;'><option value='rand'>ランダム順</option></select><select name='sort_select' id='sort_direction' style='display: none; margin: 5px; border: solid 1px #000000;'><option value='up'>昇順</option><option value='down'>降順</option></select></div><div style='display:inline-flex;flex-direction:row;'><label for='select'>席の埋まり方</label><select name='how_set'onchange='set_onchanger()'id='how_set'style='display:inline-block;margin:5px;border:solid1px#000000;'><option value='chair'>席間隔指定</option><option value='cols'>列間隔指定</option><option value='check'>市松模様状</option></select><select name='set_num'id='set_num'onchange='set_onchanger()'style='display:inline-block;margin:5px;border:solid 1px #000000;'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select></div></form><button id='submit' onclick='name_set()'style='display: block; margin-left: auto;margin-right: auto; width: 50%; cursor: pointer;'>確定</button></div>";
+    Element_arrange_set.innerHTML="<div id='X' style='display:inline-block;position:absolute;z-index:80;box-sizing:border-box;background:#ffffff;width:400px;min-height:150px;height:auto;top:50%;left:50%;transform:translate(-50%,-50%);padding:5px;box-shadow:#888888 2px 3px 2px;border:solid #cccccc 1px;border-radius:5px;'>このシステムでは生徒を教室机、1列目の左から右、2列目の左から右、3列目。。。という順で並べます。<form name='option_form'style='display:inline-flex;flex-direction:column;width:100%;box-sizing:border-box;padding:10px;'><div><label for='select'>席への割り振り順</label><select name='sort_select' onchange='set_onchanger()'id='sort_order'style='display:inline-block;margin:5px;border:solid1px#000000;'><option value='rand'>ランダム順</option></select><select name='sort_select' id='sort_direction' style='display: none; margin: 5px; border: solid 1px #000000;'><option value='up'>昇順</option><option value='down'>降順</option></select></div><div style='display:inline-flex;flex-direction:row;'><label for='select'>席の埋まり方</label><select name='how_set'onchange='set_onchanger()'id='how_set'style='display:inline-block;margin:5px;border:solid1px#000000;'><option value='chair'>席間隔指定</option><option value='cols'>列間隔指定</option><option value='check'>市松模様状</option></select><select name='set_num'id='set_num'onchange='set_onchanger()'style='display:inline-block;margin:5px;border:solid 1px #000000;'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select></div><div style='display:inline-flex;flex-direction:row;'><input type='checkbox' id='1column_empty' style='display:inline-block;'><label for='1column_empty'>一列目を開ける</label></div><div style='display:inline-flex;flex-direction:row;'><p>クラス名</p><input type='text' id='class_name'></div><div style='display:inline-flex;flex-direction:row;'><p>教員名</p><input type='text' id='teacher_name'></div></form><button id='submit' onclick='name_set()'style='display: block; margin-left: auto;margin-right: auto; width: 50%; cursor: pointer;'>確定</button></div>";
     
     Elemant_sort_sel = document.getElementById("sort_order");
     Element_set_way = document.getElementById("how_set");
     Element_pitch = document.getElementById("set_num");
     Element_sort_dir = document.getElementById("sort_direction");
-    
+    Element_1col_emp= document.getElementById("1column_empty");
     Element_arrange_set.style.display="none"
-    
+    Elem_class_nm=document.getElementById("class_name");
+    Elem_teach_nm=document.getElementById("teacher_name");
     room_checker();
 }
 
@@ -60,7 +61,7 @@ function set_onchanger(){
     }else{
         Element_sort_dir.style.display="inline-block";
     }
-    var[dsk_sum,cos,ros,rc,cc]=room_checker();
+    var[dsk_sum,cos,ros,rc,cc]=room_checker('check');
     var deskfig;
     var pitch=parseInt(Element_pitch.value);
     var error_flg=0;
@@ -106,7 +107,7 @@ function set_onchanger(){
     return back_result;
 }
 
-var room_id_list=[];
+ let room_id_list=[];
 function grid_id_set(){　//座席へのIDセット (grid)
     var desks = Element_room.children;
     room_id_list=[];
@@ -126,11 +127,9 @@ function grid_id_set(){　//座席へのIDセット (grid)
         }
     }
 }
-
 function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テーブルの場合 
     var rn=1;
     room_id_list=[];
-
     for(var o=1;o<Element_room.childNodes[1].childElementCount*2;o+=2){
         var this_row_c=Element_room.childNodes[1].childNodes[o].childElementCount;
         var start=1;
@@ -140,7 +139,7 @@ function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テ�
                 var this_id=(alpha_bet[start]+"-"+(( '00' + rn ).slice( -2 )));
                 Element_room.childNodes[1].childNodes[o].childNodes[g].id=this_id;
                 Element_room.childNodes[1].childNodes[o].childNodes[g].childNodes[1].innerHTML=this_id;
-                room_id_list.push(this_id);//部屋に存在するつくえのidを事前にリスト化
+                    room_id_list.push(this_id);//部屋に存在するつくえのidを事前にリスト化
                 start++;
             }
         }else{
@@ -148,14 +147,16 @@ function table_id_set(row_c, row_cols,max_rows_c){　　//id　セット　テ�
                 var this_id=(alpha_bet[start-1]+"-"+(( '00' + rn ).slice( -2 )));
                 Element_room.childNodes[1].childNodes[o].childNodes[g].id=this_id;
                 Element_room.childNodes[1].childNodes[o].childNodes[g].childNodes[1].innerHTML=this_id;
-                room_id_list.push(this_id);//部屋に存在するつくえのidを事前にリスト化
+                    room_id_list.push(this_id);//部屋に存在するつくえのidを事前にリスト化
                 start++;
             }
         }
         rn++;
     }
     //Element_room=Element_room.parentNode;
+
     console.log(room_id_list);
+    console.log("a");
 }
 function get_element_style(ele){
     return window.getComputedStyle(ele);　
@@ -163,9 +164,8 @@ function get_element_style(ele){
 function get_tagName(Ele){
     return Ele.tagName;
 }
-
 //部屋の行列数チェック　（1601のような規則的な部屋のみ）
-function room_checker(){
+function room_checker(pattern = null){
     tag_type = get_tagName(Element_room);
     var desk_count=0,colm_nums,row_nums,col_consist=[],row_consists=[];
     if (get_element_style(Element_room).display=="grid"){
@@ -203,10 +203,8 @@ function room_checker(){
             if((u+1)%colm_nums==0){
                 r++;
             }
-
         }
         desk_count=desk_count-hiden_desk;
-        
         
     }else if(tag_type=="TABLE"){ //さて、、Table タグの場合は？？
         row_nums=Element_room.childNodes[1].childElementCount ;           //机の行数
@@ -232,15 +230,25 @@ function room_checker(){
         }
         
     }
-        console.log(col_consist);
-        console.log(row_consists);
+    if(Element_1col_emp.checked == true){
+        desk_count = desk_count - row_consists[0];
+        row_nums=row_nums-1;
+        if(pattern == "check"){
+            row_consists.shift();
+            for(var i=0; i< col_consist.length;i++){
+                col_consist[0]=col_consist[0]-1;
+            }
+        }
+        
+
+    }
     return [desk_count, colm_nums, row_nums,row_consists,col_consist]; //結果返却
 }
-
+/*--
 //-------------------　ドラッグドロップ　のみの場合（ボタンなし）--------------------
 // IDさえあればどこでもできる　Bodyでも　HTMLでも　Divでも　
 //ただしユニバーサルデザイン的にはどうなのか
-/*--
+
 var element2 = document.getElementById("drop-zone"); 
 element2.addEventListener("dragover", function (e) {
     e.preventDefault();     //通常のファイルが開く動作の停止
@@ -264,7 +272,6 @@ console.log("J")
 //--------------------------　ドラッグドロップ　直Inputの場合----------------------------
 //Inputがないとできないので制約がある
 var element = document.getElementById("drop-zone2");
-//var inputfile = document.getElementById('drop-zone')
 element.addEventListener("dragover", function (e) {
     drag_Effect_on(element);
 });
@@ -292,7 +299,6 @@ function drag_Effect_off(Ele){
     Ele.style.boxSizing="border-box";
     Ele.style.border="none";
 }
-
 /*------------------ファイルタイプ監査　csv xls以外はFalse------------------*/
 function type_inspection(f){
     //拡張子判定　Excel　CSVではFile.type ですなおにCSVと出ないため　対策
@@ -417,8 +423,8 @@ function name_set(){
     Element_arrange_set.style.display="none";
 
     var memberdata=list_sort(members);
-    var classnm = prompt("授業名を入力してください");
-    var teachernm = prompt("教員名を入力してください");
+    var classnm = Elem_class_nm.value;
+    var teachernm = Elem_teach_nm.value;
     document.getElementById("classdata").innerHTML="授業名："+classnm+"<br>担当教員名："+teachernm+"<br>学生数："+(members.length-1);
     var member_count=1;
     
@@ -431,6 +437,10 @@ function name_set(){
     頭文字がそのアルファベットに合致するエレメントに名前を挿入
     */
 
+    if(Element_1col_emp.checked == true){
+        room_id_list.splice(0,rc[0]);
+    }
+ 
     if(Element_set_way.value=="chair"){　　 //指定並び順　席間隔
         for(i=0;i<room_id_list.length;i+=step){
             if(memberdata[member_count]){
@@ -463,6 +473,7 @@ function name_set(){
         var use_char=[];
         var w=0;
         
+        console.log(room_id_list);
         for(var t=0;t<room_id_list.length;t++){
             if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())!=b){
                 b++;
@@ -472,9 +483,12 @@ function name_set(){
                     use_char=odd_alpha_bet;
                 }
             }
+            console.log(t);
             if(parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
                 for(var f=0;f<use_char.length;f++){
+                    console.log(room_id_list[t][0],parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString()))
                     if(room_id_list[t][0]==use_char[f]&&parseInt(room_id_list[t][2].toString()+room_id_list[t][3].toString())==b){
+                        
                         if(memberdata[member_count]){
                         document.getElementById(room_id_list[t]).childNodes[3].innerHTML= memberdata[member_count][1];
                         member_count++;
@@ -484,4 +498,5 @@ function name_set(){
             }
         }
     }
+    document.getElementById('drop_area_wrap').style.display="none";
 }

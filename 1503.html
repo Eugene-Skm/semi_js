@@ -86,28 +86,12 @@
                         <div class="desk_no">A-01</div>
                         <div class="name"></div>
                     </td>
-                    <td class="item_t">
-                        <div class="desk_no">A-01</div>
-                        <div class="name"></div>
-                    </td>
-                    <td class="item_t">
-                        <div class="desk_no">A-01</div>
-                        <div class="name"></div>
-                    </td>
-                    <td class="item_t">
-                        <div class="desk_no">A-01</div>
-                        <div class="name"></div>
-                    </td>
-                    <td class="item_t">
-                        <div class="desk_no">A-01</div>
-                        <div class="name"></div>
-                    </td>
-                    <td class="item_t">
-                        <div class="desk_no">A-01</div>
-                        <div class="name"></div>
-                    </td>
                 </tr>
+            </tbody>
+        </table>
 
+        
+            </tbody>
                 <tr>
                     <td class="item_t">
                         <div class="desk_no">A-01</div>
@@ -920,9 +904,11 @@
             </tbody>
         </table>
         <!-- ボタン表示したくないときはlabelで囲い　for 関連付け-->
-        inputのドラッグドロップエリア（従来のファイルダイアログが利用できる）<br>
-        <input type="file" value="a" id="drop-zone2" style="display: block; width:400px; height:300px; background:#ccf;">
-        <br>
+        <div id="drop_area_wrap">
+            inputのドラッグドロップエリア（従来のファイルダイアログが利用できる）<br>
+            <input type="file" value="a" id="drop-zone2" style="display: block; width:400px; height:300px; background:#ccf;">
+            <br>
+        </div>
         <!--
         divのみのドラッグドロップエリア(Bodyでもどこでもタグにかかわらずidさえ指定すれば使える)<br>
         <div for="drop-zone" id="drop-zone" style="display: inline-block; width:400px; height:300px; background:#ccf;"></div>
